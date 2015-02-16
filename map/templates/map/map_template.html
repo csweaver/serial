@@ -1,0 +1,38 @@
+<html>
+<head>
+{% load staticfiles %}
+<script src={% static "map/d3.js" %} type='text/javascript'></script>
+<script src={% static "map/jquery.js" %} type='text/javascript'></script>
+<script type='text/javascript'>
+var towers = [
+{% for tower in towers %}
+{ 	'name' :' {{tower.name}}',
+	'x': {{tower.x}},
+	'y': {{tower.y}}
+},
+{% endfor %}
+];
+$( document ).ready(function() {
+	d3.select('body')
+		.selectAll('p')
+		.data(towers)
+		.enter()
+		.append('p')
+		.text( function(d) {
+			return d.name;
+		})
+		.style('left', function(d) {
+			return d.x;
+		})
+		.style('top', function(d) {
+			return d.y;
+		})
+		.style('position', 'absolute')
+		;
+});
+</script>
+</head>
+<body>
+	
+</body>
+</html>
